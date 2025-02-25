@@ -135,62 +135,6 @@ img{
    height: inherit;
    border-radius: inherit;
 }
-.ach{
-    margin-left: 5vw;
-   
-    width: 80%;
-    height: 10vh;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    display: flex;
-}
-.amazon{   
-    position: absolute;
-    font-size: 50%;
-    margin-top: -26vh;
-width: 15vw;
-height: 10vh;
-margin-left: 55vw;
-}
-
-
-.ali{
-
-    position: absolute;
-    font-size: 50%;
-  margin-top: -25.5vh;
-width: 10vw;
-height: 10vh;
-margin-left: 45vw;
-}
-
-.amazon img{
-   
-    margin-top: -3vh;
-    width: inherit;
-    height: inherit; margin-left: -5vh;
-    filter: drop-shadow( 0px 18px 10px rgb(6, 7, 8));
-}
-.ali img{
-  
- 
-    margin-top: -0.5vh;
-    width: 8vw;
-    height:inherit;
-    filter: drop-shadow( 0px 18px 10px rgb(6, 7, 8)); 
-}
-.charik{
-    position: absolute;
-    margin-top: -41vh;
-    margin-left: 57vw;
-    font-size: 40%;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-.charik h2{
-    margin-top: 10vh;
-    filter: drop-shadow( 0px 18px 10px rgb(6, 7, 8));
-}
-
-
 
 
 @media(max-width:600px){
@@ -304,56 +248,8 @@ margin-left: 45vw;
             margin-left: 10.1%;
             height: 6vh;
         }
-        .ach{
-            margin-left: 5vw;
-           margin-top: 12vh;
-            width: 90%;
-            height: 10vh;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            display: flex;
-        }
-        .amazon{   
-        position: static;
-            font-size: 50%;
-            margin-top: 2vh;
-width: 30vw;
-height: 8vh;
-margin-left: 10vw;
-        }
-       
-
-        .ali{
-            font-size: 50%;
-           margin-top: 2vh; 
-width: 30vw;
-height: 8vh;
-margin-left: 10vw;
-        }
-
-        .amazon img{
-           
-            margin-top: -3vh;
-            width: inherit;
-            height: inherit; margin-left: -5vh;
-            filter: drop-shadow( 0px 18px 10px rgb(6, 7, 8));
-        }
-        .ali img{
-          
-            margin-left: 20vh;
-            margin-top: -0.5vh;
-            width: 16vw;
-            height: 2.5vh;
-            filter: drop-shadow( 0px 18px 10px rgb(6, 7, 8)); 
-        }
-        .charik{margin-left: 10vw;
-            margin-top: -2vh;
-            font-size: 40%;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
-        .charik h2{
-            margin-top: 10vh;
-            filter: drop-shadow( 0px 18px 10px rgb(6, 7, 8));
-        }
+     
+     
     
    
          
