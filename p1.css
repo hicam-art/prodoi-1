@@ -178,6 +178,14 @@ img{
         height: 20vh;
       
     }
+    .imamaz{
+        margin-top: -6vh;
+     
+        width:35vw;
+        height: 15vh;
+        margin-left: vw;
+        filter: drop-shadow( 0px 15px 10px rgb(6, 7, 8));
+    }
    .im1{
  
        width: 90%;
