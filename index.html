@@ -1,113 +1,646 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="p1.css">
-    <title>Document</title>
-   <meta http-equiv="refresh" content="">
+  <meta charset="UTF-8"/>
+  <title>دفتر طلبيات النجارة (دينار جزائري)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <style>
+    
+    body{font-family:'Tahoma';background:#f2f2f2;margin:0;padding:0;
+  }
+    .card{background-image: url(back.jpg); color: #37c517;
+      background-repeat: no-repeat; background-size: 100% 100%;
+      max-width:1400px;margin:auto;padding:20px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+    h1{text-align:center;color:#cec8c8; filter: drop-shadow(0px 0px 10px rgb(0, 0, 0));}
+    label{display:block;margin-top:10px;font-weight:bold}
+    input,textarea{width:50%;padding:8px;margin-top:4px;border:1px solid #fe0000;border-radius:4px;font-size:16px; color: #ff0303;}
+    button{transition: 0.2s; background:#2e7d32;color:#ff0000;border:none;padding:8px 14px;border-radius:50px;cursor:pointer;font-size:14px;margin:4px 2px;}
+    button:hover{background:#fdfdfd25; padding: 10px 16px;}
+    table{width:100%;margin-top:20px;border-collapse:collapse;font-size:14px}
+    th,td{padding:8px;text-align:center;border:1px solid #ccc}
+    th{background:#e8f5e9}
+    .delBtn{background:#c62828}.delBtn:hover{background:#b71c1c}
+    .exportBtn{background:#1565c0}.exportBtn:hover{background:#0d47a1}
+    .printBtn{background:#ff9800}.printBtn:hover{background:#f57c00}
+    .zoomBtn{background:#00796b}.zoomBtn:hover{background:#004d40}
+    .deliverBtn{background:#43a047}.deliverBtn:hover{background:#2e7d32}
+    .payBtn{background:#ff5722}.payBtn:hover{background:#e64a19}
+    .editBtn{background:#795548}.editBtn:hover{background:#5d4037}
+    /* معرض صور صغير */
+    .gallery{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+    .gallery img{width:70px;height:70px;object-fit:cover;border:1px solid #999;border-radius:4px;cursor:pointer;transition:transform .2s}
+    .imgWrap{position:relative;display:inline-block}
+    .imgWrap .rm{position:absolute;top:0;right:0;background:#c62828;color:#fff;border:none;padding:2px 6px;border-radius:50%;cursor:pointer;font-size:12px}
+    input[type=file]{display:none}
+    .imgLabel{background:#1976d2;color:#fff; width:10%;transition: 0.3s; padding:6px 12px;border-radius:4px;cursor:pointer;font-size:14px}
+    .imgLabel:hover{background:#0da1689c; width:30%;}
+    /* شريط البحث */
+    .searchBox{display:flex;gap:8px;margin-bottom:12px}
+    .searchBox input{flex:1}
+    /* المودال */
+    .modal{display:none;position:fixed;z-index:999;left:0;top:0;width:100%;height:100%;overflow:auto;background:rgba(0,0,0,.6)}
+    .modal-content{background:#fff;margin:5% auto;padding:20px;border-radius:8px;width:90%;max-width:700px}
+    .close{color:#aaa;float:left;font-size:28px;font-weight:bold;cursor:pointer}
+    .close:hover{color:#000}
+    #modalImgs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+    #modalImgs img{max-width:200px;max-height:200px;object-fit:cover;border:1px solid #999;border-radius:4px;cursor:pointer;transition:transform .2s}
+    /* صف مُسلَّم */
+    tr.delivered{background:rgba(0,255,0,.15)}
+    /* تكبير الصورة بحجم كامل عند Hover */
+    .img-hover{
+      position:fixed;
+      top:50%;right:-100%; /* تبدأ من خارج الشاشة يمينا */
+      transform:translateY(-50%);
+      max-width:90vw;max-height:90vh;
+      z-index:1000;
+      border:3px solid #fff;
+      box-shadow:0 0 20px rgba(0,0,0,.7);
+      border-radius:12px;
+      transition:right .6s ease-in-out, transform .6s ease-in-out;
+      pointer-events:none;
+    
+    }
+    .img-hover.show{
+      right:20px; /* تستقر على يمين الشاشة */
+      transform:translateY(-50%) scale(1);
+    }
+    .container{
+      display: flex;
+      width: inherit;
+      height: inherit;
+    }
+    .table{
+      width:80%;
+      margin-top: -10vh;
+     
+    }
+    .pho{
+     position: absolute;
+      width: 38vw;
+      height: 48vh;
+     
+     border-radius:10px;
+     margin-right: 50%;
+     margin-top: -2vh;
+    
+    }
+    .vid{
+      width: inherit;
+      height: inherit;
+      border-radius: 10px;
+      filter: drop-shadow(0px 0px 5px rgb(255, 0, 0));
+    }
+  </style>
 </head>
 <body>
-  <center>
-    <div class="container">
-    
-        <div class="meni">
-            
-            <img class="logo" src="image/lojo.png" alt=""> </div>
-            <div class="col">
 
 
- 
-    
-
-        <div class="im1">
-          <img id="ooo" src="image/x box x/imm.jpg" alt="">
-            <div class="ppp">
-        <div id="a1" onclick="a1()" class="pp1"><img style="width: inherit; height: inherit;
-        border-radius: inherit;" src="image/x box x/im1.jpg" alt=""></div>
-
-        <div id="a2" onclick="a2()" class="pp2"><img style="width: inherit; height: inherit;
-        border-radius: inherit;" src="image/x box x/im2.jpg" alt=""></div>
-
-        <div id="a3" onclick="a3()" class="pp3"><img style="width: inherit; height: inherit;
-        border-radius: inherit;" src="image/x box x/im3.jpg" alt=""></div>
-
-        <div id="a4" onclick="a4()" class="pp4"><img style="width: inherit; height: inherit;
-        border-radius: inherit;" src="image/x box x/im4.jpg" alt=""></div>
-    </div>
-    
-        </div>
-     <div class="hp">
-         <h1>Xbox Series X</h1>
-         <p>1TB SSD Console - Includes Xbox Wireless Controller - 
-          Up to 120 frames per second - 16 GB RAM - 1 TB SSD Storage -
-           Experience True 4K Gaming - Xbox Velocity Architecture
-           IN THE BOX: Xbox Series X console, one Xbox Wireless Controller,
-            an ultra high-speed HDMI cable, power cable, and 2 AA batteries.
-            SURROUND SOUND: Enhance gameplay with both full-spectrum visuals and
-            immersive audio with Dolby Vision and Dolby Atmos
-            
-         </p>
   
+  <div class="card">
+    <h1>  <img style="width: 20%; filter: drop-shadow(0px 0px 10px rgba(255, 1, 1, 0.533)); " src="image logo.png" alt=""> </h1>
 
-     </div>  
+    <!-- نموذج الإدخال -->
+     <div class="container">
+      <div class="table">
+    <label>اسم العميل</label>
+    <input type="text" id="clientName" placeholder=" الاسم"/>
+
+    <label>رقم الهاتف</label>
+    <input type="tel" id="phone" placeholder="05xxxxxxxx"/>
+
+    <label>تفاصيل الطلبية</label>
+    <textarea id="orderDetails" rows="3" placeholder="طاولة طعام 2×1 متر + 4 كراسي..."></textarea>
+
+    <label>سعر المواد/السلع المستخدمة ( دج)</label>
+    <input type="number" id="materialsCost" placeholder="800" min="0" value="0"/>
+
+    <label>السعر المتفق عليه (دينار جزائري)</label>
+    <input type="number" id="agreedPrice" placeholder="2500" min="0"/>
+
+    <label>السعر المدفوع (دينار جزائري)</label>
+    <input type="number" id="paidPrice" placeholder="1000" min="0" value="0" readonly/>
+
+    <label>السعر المتبقي (يُحسب تلقائياً)</label>
+    <input type="number" id="remainingPrice" readonly/>
+</div>
+    <div class="pho"> <video loop muted autoplay class="vid" src="vedeo.mp4"></video>    </div>
+    
+</div>
+
+    <!-- معرض صور -->
+    <label>صور الطلبية </label>
+    <input type="file" id="imgInput" accept="image/*" multiple onchange="previewImages(event)"/>
+    <label for="imgInput" class="imgLabel">+صورة</label>
+    <div id="imgGallery" class="gallery"></div>
+
+    <div style="margin-top:15px">
+      <button onclick="saveOrder()">حفظ الطلبية</button>
+      <button class="exportBtn" onclick="exportExcel()">تصدير Excel</button>
     </div>
 
-   
+    <!-- شريط البحث -->
+    <div class="searchBox">
+      <input type="tel" id="searchPhone" placeholder="ابحث برقم الهاتف..." oninput="loadOrders()"/>
+    </div>
 
-<div class="aa1">
-<p>click Buy from Amazon</p> 
-<hr> 
-<a href="https://amzn.to/43hfiaT">
-<div class="imamaz">
-  <img src="image/amazon.png" alt="">
-   </div></a>
-     
-   <p>click Buy from AliExpress</p> 
-   <hr> 
-   <a href="https://amzn.to/43hfiaT">
-   <div class="imali">
-     <img src="image/aliex.png" alt="">
-      </div></a>
-</div>
-<p class="hokok">
- <hr> All rights reserved</p>
-</div>
+    <!-- إجمالي الفائدة -->
+    <div style="margin-top:15px;font-size:18px;font-weight:bold;color:#2e7d32">
+          : <span id="totalProfit">0</span> دج 
+    </div>
 
-<hr>
-  </center>
+    <!-- الجدول -->
+    <table id="ordersTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>العميل</th>
+          <th>الهاتف</th>
+          <th>تفاصيل</th>
+          <th>مواد</th>
+          <th>متفق</th>
+          <th>مدفوع</th>
+          <th>متبقي</th>
+          <th>التاريخ</th>
+          <th>صور</th>
+          <th>تكبير</th>
+          <th>طباعة</th>
+          <th>تسليم</th>
+          <th>تسديد دفعة</th>
+          <th>تعديل</th>
+          <th>حذف</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
+  <!-- مودال تسديد دفعة -->
+  <div id="payModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closePayModal()">&times;</span>
+      <h2>تسديد دفعة جديدة</h2>
+      <label>المبلغ (دينار جزائري)</label>
+      <input type="number" id="payAmount" placeholder="500" min="0" step="0.01"/>
+      <label>التاريخ</label>
+      <input type="date" id="payDate"/>
+      <button onclick="addPayment()">إضافة الدفعة</button>
+      <h3>الدفعات السابقة:</h3>
+      <div id="paymentsList"></div>
+    </div>
+  </div>
 
-<script>
-function a1(){
-    let ooo=document.getElementById("ooo")
- ooo.src = "image/x box x/im1.jpg";
-   
-}
-function a2(){
-    let ooo=document.getElementById("ooo")
- ooo.src = "image/x box x/im2.jpg";
-   
-}
-function a3(){
-    let ooo=document.getElementById("ooo")
- ooo.src = "image/x box x/im3.jpg";
-   
-}
-function a4(){
-    let ooo=document.getElementById("ooo")
- ooo.src = "image/x box x/im4.jpg";
-   
-}
+  <!-- مودال التفاصيل -->
+  <div id="detailModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>تفاصيل الطلبية</h2>
+      <div id="modalBody"></div>
+      <div id="modalPayments"></div>
+      <div id="modalImgs"></div>
+    </div>
+  </div>
 
+  <!-- مودال التعديل الكامل -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeEditModal()">&times;</span>
+      <h2>تعديل الطلبية</h2>
+      <label>اسم العميل</label>
+      <input type="text" id="editClientName"/>
+      <label>رقم الهاتف</label>
+      <input type="tel" id="editPhone"/>
+      <label>تفاصيل الطلبية</label>
+      <textarea id="editDetails" rows="3"></textarea>
+      <label>سعر المواد (دينار جزائري)</label>
+      <input type="number" id="editMaterials"/>
+      <label>السعر المتفق (دينار جزائري)</label>
+      <input type="number" id="editAgreed"/>
+      <label>الحالة</label>
+      <select id="editDelivered">
+        <option value="false">قيد التنفيذ</option>
+        <option value="true">مُسَلَّمة</option>
+      </select>
+      <label>صور الطلبية (اختياري)</label>
+      <input type="file" id="editImgInput" accept="image/*" multiple onchange="previewEditImages(event)"/>
+      <label for="editImgInput" class="imgLabel">+ تعديل الصور</label>
+      <div id="editImgGallery" class="gallery"></div>
+      <div style="margin-top:15px">
+        <button onclick="saveEdit()">حفظ التعديلات</button>
+      </div>
+    </div>
+  </div>
 
-</script>
+  <!-- صورة Hover كبيرة -->
+  <img id="hoverImg" class="img-hover" alt="تكبير"/>
 
+  <script>
+    /* ====== متغيرات مؤقتة ====== */
+    let currentImages = [];
+    let currentEditImages = [];
+    let editingOrderId = null;
 
-    
-</body>
-</html>
-    
-    
+    /* ====== عند التحميل ====== */
+    window.onload = () => {
+      loadOrders();
+      calcRemaining();
+      document.getElementById('agreedPrice').oninput = calcRemaining;
+      document.getElementById('paidPrice').oninput = calcRemaining;
+      document.getElementById('materialsCost').oninput = calcRemaining;
+    };
+
+    /* ====== حساب المتبقي ====== */
+    function calcRemaining() {
+      const a = parseFloat(document.getElementById('agreedPrice').value) || 0;
+      const p = parseFloat(document.getElementById('paidPrice').value) || 0;
+      document.getElementById('remainingPrice').value = Math.max(0, a - p);
+    }
+
+    /* ====== معاينة الصور (إضافة) ====== */
+    function previewImages(ev) {
+      const files = Array.from(ev.target.files);
+      if (currentImages.length + files.length > 5) { alert('الحد الأقصى 5 صور فقط'); return; }
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          currentImages.push(e.target.result);
+          renderGallery();
+        };
+        reader.readAsDataURL(file);
+      });
+      ev.target.value = '';
+    }
+    function renderGallery() {
+      const box = document.getElementById('imgGallery');
+      box.innerHTML = '';
+      currentImages.forEach((src, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'imgWrap';
+        wrap.innerHTML = `
+          <img src="${src}" onmouseenter="showHover(this.src)" onmouseleave="hideHover()"/>
+          <button class="rm" onclick="removeTempImg(${idx})">×</button>
+        `;
+        box.appendChild(wrap);
+      });
+    }
+    function removeTempImg(idx) {
+      currentImages.splice(idx, 1);
+      renderGallery();
+    }
+
+    /* ====== تكبير Hover مع الحركة من اليسار إلى اليمين ====== */
+    function showHover(src){
+      const img=document.getElementById('hoverImg');
+      img.src=src;
+      img.classList.add('show');
+    }
+    function hideHover(){
+      document.getElementById('hoverImg').classList.remove('show');
+    }
+
+    /* ====== حفظ الطلبية ====== */
+    function saveOrder() {
+      const name = document.getElementById('clientName').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const details = document.getElementById('orderDetails').value.trim();
+      const materials = parseFloat(document.getElementById('materialsCost').value) || 0;
+      const agreed = parseFloat(document.getElementById('agreedPrice').value) || 0;
+      const paid = parseFloat(document.getElementById('paidPrice').value) || 0;
+      if (!name || !phone || !details || agreed <= 0) {
+        alert('يرجى تعبئة الحقول الإجبارية (العميل، الهاتف، التفاصيل، السعر المتفق عليه)');
+        return;
+      }
+      const order = {
+        id: Date.now(),
+        name,
+        phone,
+        details,
+        materials,
+        agreed,
+        paid,
+        remaining: Math.max(0, agreed - paid),
+        date: new Date().toLocaleString('ar-EG'),
+        images: [...currentImages],
+        delivered: false,
+        payments: []
+      };
+      let orders = JSON.parse(localStorage.getItem('woodOrders') || '[]');
+      orders.unshift(order);
+      localStorage.setItem('woodOrders', JSON.stringify(orders));
+      clearForm();
+      loadOrders();
+    }
+    function clearForm() {
+      document.getElementById('clientName').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('orderDetails').value = '';
+      document.getElementById('materialsCost').value = '0';
+      document.getElementById('agreedPrice').value = '';
+      document.getElementById('paidPrice').value = '0';
+      calcRemaining();
+      currentImages = [];
+      renderGallery();
+    }
+
+    /* ====== عرض الطلبيات مع البحث ====== */
+    function loadOrders() {
+      const orders = JSON.parse(localStorage.getItem('woodOrders') || '[]');
+      const search = document.getElementById('searchPhone').value.trim();
+      const filtered = search ? orders.filter(o => o.phone.includes(search)) : orders;
+      const tbody = document.querySelector('#ordersTable tbody');
+      tbody.innerHTML = '';
+      let totalProfit = 0;
+      filtered.forEach((o, i) => {
+        if (o.delivered) totalProfit += (o.agreed - o.materials);
+        const tr = document.createElement('tr');
+        if (o.delivered) tr.classList.add('delivered');
+        let imgCell = '';
+        if (o.images && o.images.length) {
+          imgCell = '<div class="gallery">';
+          o.images.forEach(src => imgCell += `<img src="${src}" onmouseenter="showHover(this.src)" onmouseleave="hideHover()"/>`);
+          imgCell += '</div>';
+        }
+        tr.innerHTML = `
+          <td>${i + 1}</td>
+          <td>${o.name}</td>
+          <td>${o.phone}</td>
+          <td style="text-align:right">${o.details}</td>
+          <td>${o.materials}</td>
+          <td>${o.agreed}</td>
+          <td>${o.paid}</td>
+          <td>${o.remaining}</td>
+          <td>${o.date}</td>
+          <td>${imgCell}</td>
+          <td><button class="zoomBtn" onclick="zoomOrder(${o.id})">تكبير</button></td>
+          <td><button class="printBtn" onclick="printOrder(${o.id})">طباعة</button></td>
+          <td><button class="deliverBtn" onclick="toggleDeliver(${o.id})">${o.delivered ? 'تراجع' : 'تسليم'}</button></td>
+          <td><button class="payBtn" onclick="openPayModal(${o.id})">تسديد دفعة</button></td>
+          <td><button class="editBtn" onclick="openEditModal(${o.id})">تعديل</button></td>
+          <td><button class="delBtn" onclick="deleteOrder(${o.id})">حذف</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      document.getElementById('totalProfit').textContent = totalProfit.toFixed(2);
+    }
+
+    /* ====== حذف ====== */
+    function deleteOrder(id) {
+      if (!confirm('متأكد من الحذف؟')) return;
+      let orders = JSON.parse(localStorage.getItem('woodOrders') || '[]');
+      orders = orders.filter(o => o.id !== id);
+      localStorage.setItem('woodOrders', JSON.stringify(orders));
+      loadOrders();
+    }
+
+    /* ====== تسليم/تراجع ====== */
+    function toggleDeliver(id) {
+      let orders = JSON.parse(localStorage.getItem('woodOrders') || '[]');
+      const order = orders.find(o => o.id === id);
+      if (order) {
+        order.delivered = !order.delivered;
+        localStorage.setItem('woodOrders', JSON.stringify(orders));
+        loadOrders();
+      }
+    }
+
+    /* ====== تسديد دفعة ====== */
+    function openPayModal(id) {
+      editingOrderId = id;
+      const orders = JSON.parse(localStorage.getItem('woodOrders') || '[]');
+      const order = orders.find(o => o.id === id);
+      if (!order) return;
+      // عرض الدفعات السابقة
+      const list = document.getElementById('paymentsList');
+      list.innerHTML = '';
+      if (order.payments && order.payments.length) {
+        let html = '<table style="width:100%;border-collapse:collapse;margin-bottom:10px"><tr><th>#</th><th>المبلغ (د.ج)</th><th>التاريخ</th></tr>';
+        order.payments.forEach((p, i) => {
+          html += `<tr><td>${i + 1}</td><td>${p.amount}</td><td>${p.date}</td></tr>`;
+        });
+        html += '</table>';
+        list.innerHTML = html;
+      } else {
+        list.innerHTML = 'لا توجد دفعات سابقة';
+      }
+      // تفريغ الحقول
+      document.getElementById('payAmount').value = '';
+      document.getElementById('payDate').value = '';
+      document.getElementById('payModal').style.display = 'block';
+    }
+    function closePayModal() {
+      document.getElementById('payModal').style.display = 'none';
+    }
+    function addPayment() {
+      const amount = parseFloat(document.getElementById('payAmount').value);
+      const date = document.getElementById('payDate').value;
+      if (!amount || amount <= 0 || !date) {
+        alert('يرجى إدخال مبلغ وتاريخ صحيح');
+        return;
+      }
+      let orders = JSON.parse(localStorage.getItem('woodOrders') || '[]');
+      const order = orders.find(o => o.id === editingOrderId);
+      if (!order) return;
+      if (!order.payments) order.payments = [];
+      order.payments.push({ amount, date });
+      // حساب المدفوع
+      let totalPaid = 0;
+      order.payments.forEach(p => totalPaid += p.amount);
+      order.paid = totalPaid;
+      order.remaining = Math.max(0, order.agreed - totalPaid);
+      localStorage.setItem('woodOrders', JSON.stringify(orders));
+      closePayModal();
+      loadOrders();
+    }
+
+    /* ====== تكبير الطلبية (مودال) ====== */
+    function zoomOrder(id) {
+      const orders = JSON.parse(localStorage.getItem('woodOrders') || '[]');
+      const o = orders.find(x => x.id === id);
+      if (!o) return;
+      const profit = o.agreed - o.materials;
+      document.getElementById('modalBody').innerHTML = `
+        <table style="width:100%">
+          <tr><td><strong>العميل</strong></td><td>${o.name}</td></tr>
+          <tr><td><strong>الهاتف</strong></td><td>${o.phone}</td></tr>
+          <tr><td><strong>التفاصيل</strong></td><td>${o.details}</td></tr>
+          <tr><td><strong>سعر المواد</strong></td><td>${o.materials} دينار جزائري</td></tr>
+          <tr><td><strong>السعر المتفق</strong></td><td>${o.agreed} دينار جزائري</td></tr>
+          <tr><td><strong>المدفوع</strong></td><td>${o.paid} دينار جزائري</td></tr>
+          <tr><td><strong>المتبقي</strong></td><td>${o.remaining} دينار جزائري</td></tr>
+          <tr><td><strong>الربح التقريبي</strong></td><td>${profit} دينار جزائري</td></tr>
+          <tr><td><strong>التاريخ</strong></td><td>${o.date}</td></tr>
+          <tr><td><strong>الحالة</strong></td><td>${o.delivered ? 'مُسَلَّمة' : 'قيد التنفيذ'}</td></tr>
+        </table>
+      `;
+      // عرض الدفعات
+      const payDiv = document.getElementById('modalPayments');
+      payDiv.innerHTML = '';
+      if (o.payments && o.payments.length) {
+        let html = '<h3>الدفعات:</h3><table style="width:100%;border-collapse:collapse;margin-bottom:10px"><tr><th>#</th><th>المبلغ (د.ج)</th><th>التاريخ</th></tr>';
+        o.payments.forEach((p, i) => {
+          html += `<tr><td>${i + 1}</td><td>${p.amount}</td><td>${p.date}</td></tr>`;
+        });
+        html += '</table>';
+        payDiv.innerHTML = html;
+      }
+      // عرض الصور مع Hover
+      const imgsDiv = document.getElementById('modalImgs');
+      imgsDiv.innerHTML = '';
+      if (o.images && o.images.length) {
+        o.images.forEach(src => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.onmouseenter = () => showHover(src);
+          img.onmouseleave = hideHover;
+          imgsDiv.appendChild(img);
+        });
+      }
+      document.getElementById('detailModal').style.display = 'block';
+    }
+    function closeModal() {
+      document.getElementById('detailModal').style.display = 'none';
+    }
+    window.onclick = function (ev) {
+      if (ev.target.classList.contains('modal')) {
+        closeModal();
+        closePayModal();
+        closeEditModal();
+      }
+    };
+
+    /* ====== طباعة ====== */
+    function printOrder(id) {
+      const orders = JSON.parse(localStorage.getItem('woodOrders') || '[]');
+      const o = orders.find(x => x.id === id);
+      if (!o) return;
+      const profit = o.agreed - o.materials;
+      let imgsHtml = '';
+      if (o.images && o.images.length) {
+        o.images.forEach(src => imgsHtml += `<img src="${src}" style="width:150px;height:150px;object-fit:cover;margin:4px;border:1px solid #999"/>`);
+      }
+      // جدول الدفعات
+      let payTable = '';
+      if (o.payments && o.payments.length) {
+        payTable = '<h3>الدفعات:</h3><table style="width:100%;border-collapse:collapse;margin-bottom:10px"><tr><th>#</th><th>المبلغ (د.ج)</th><th>التاريخ</th></tr>';
+        o.payments.forEach((p, i) => {
+          payTable += `<tr><td>${i + 1}</td><td>${p.amount}</td><td>${p.date}</td></tr>`;
+        });
+        payTable += '</table>';
+      }
+      const printWindow = window.open('', '_blank', 'width=800,height=600,scrollbars=yes');
+      printWindow.document.write(`
+        <html dir="rtl">
+        <head><title>فاتورة طلبية</title>
+        <style>body{font-family:Tahoma;margin:20px}h2{color:#2e7d32}table{width:100%;border-collapse:collapse}td{padding:8px;border:1px solid #ccc}</style>
+        </head>
+        <body>
+          <h2>فاتورة طلبية نجارة</h2>
+          <table>
+            <tr><td><strong>العميل</strong></td><td>${o.name}</td></tr>
+            <tr><td><strong>الهاتف</strong></td><td>${o.phone}</td></tr>
+            <tr><td><strong>التفاصيل</strong></td><td>${o.details}</td></tr>
+            <tr><td><strong>سعر المواد</strong></td><td>${o.materials} دينار جزائري</td></tr>
+            <tr><td><strong>السعر المتفق</strong></td><td>${o.agreed} دينار جزائري</td></tr>
+            <tr><td><strong>المدفوع</strong></td><td>${o.paid} دينار جزائري</td></tr>
+            <tr><td><strong>المتبقي</strong></td><td>${o.remaining} دينار جزائري</td></tr>
+            <tr><td><strong>الربح التقريبي</strong></td><td>${profit} دينار جزائري</td></tr>
+            <tr><td><strong>التاريخ</strong></td><td>${o.date}</td></tr>
+            <tr><td><strong>الحالة</strong></td><td>${o.delivered ? 'مُسَلَّمة' : 'قيد التنفيذ'}</td></tr>
+          </table>
+          ${payTable}
+          ${imgsHtml ? `<h3>الصور:</h3><div>${imgsHtml}</div>` : ''}
+          <script>window.onload=()=>{window.print();window.onafterprint=()=>window.close()}<\/script>
+        </body></html>
+      `);
+      printWindow.document.close();
+    }
+
+    /* ====== تصدير Excel CSV ====== */
+    function exportExcel() {
+      const orders = JSON.parse(localStorage.getItem('woodOrders') || '[]');
+      if (!orders.length) { alert('لا توجد طلبيات'); return; }
+      let csv = '\ufeff'; // BOM
+      csv += 'العميل,الهاتف,التفاصيل,سعر المواد,متفق,مدفوع,متبقي,التاريخ,حالة التسليم\n';
+      orders.forEach(o => {
+        csv += `"${o.name}","${o.phone}","${o.details}","${o.materials}","${o.agreed}","${o.paid}","${o.remaining}","${o.date}","${o.delivered ? 'مُسَلَّمة' : 'قيد التنفيذ'}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `طلبيات_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    /* ====== تعديل الطلبية ====== */
+    function openEditModal(id){
+      editingOrderId = id;
+      const orders = JSON.parse(localStorage.getItem('woodOrders') || '[]');
+      const order = orders.find(o => o.id === id);
+      if (!order) return;
+      // ملء الحقول
+      document.getElementById('editClientName').value = order.name;
+      document.getElementById('editPhone').value = order.phone;
+      document.getElementById('editDetails').value = order.details;
+      document.getElementById('editMaterials').value = order.materials;
+      document.getElementById('editAgreed').value = order.agreed;
+      document.getElementById('editDelivered').value = order.delivered ? 'true' : 'false';
+      // عرض الصور الحالية
+      currentEditImages = [...(order.images || [])];
+      renderEditGallery();
+      document.getElementById('editModal').style.display = 'block';
+    }
+    function closeEditModal() {
+      document.getElementById('editModal').style.display = 'none';
+    }
+    function previewEditImages(ev) {
+      const files = Array.from(ev.target.files);
+      if (currentEditImages.length + files.length > 5) { alert('الحد الأقصى 5 صور فقط'); return; }
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          currentEditImages.push(e.target.result);
+          renderEditGallery();
+        };
+        reader.readAsDataURL(file);
+      });
+      ev.target.value = '';
+    }
+    function renderEditGallery() {
+      const box = document.getElementById('editImgGallery');
+      box.innerHTML = '';
+      currentEditImages.forEach((src, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'imgWrap';
+        wrap.innerHTML = `
+          <img src="${src}" onmouseenter="showHover(this.src)" onmouseleave="hideHover()"/>
+          <button class="rm" onclick="removeEditTempImg(${idx})">×</button>
+        `;
+        box.appendChild(wrap);
+      });
+    }
+    function removeEditTempImg(idx) {
+      currentEditImages.splice(idx, 1);
+      renderEditGallery();
+    }
+    function saveEdit() {
+      let orders = JSON.parse(localStorage.getItem('woodOrders') || '[]');
+      const order = orders.find(o => o.id === editingOrderId);
+      if (!order) return;
+      // تحديث البيانات
+      order.name = document.getElementById('editClientName').value.trim();
+      order.phone = document.getElementById('editPhone').value.trim();
+      order.details = document.getElementById('editDetails').value.trim();
+      order.materials = parseFloat(document.getElementById('editMaterials').value) || 0;
+      order.agreed = parseFloat(document.getElementById('editAgreed').value) || 0;
+      order.delivered = document.getElementById('editDelivered').value === 'true';
+      order.images = [...currentEditImages];
+      // إعادة حساب المتبقي
+      order.remaining = Math.max(0, order.agreed - order.paid);
+      localStorage.setItem('woodOrders', JSON.stringify(orders));
+      closeEditModal();
+      loadOrders();
+    }
+  </script>
 </body>
 </html>
